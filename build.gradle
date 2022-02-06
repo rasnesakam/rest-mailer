@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+ext {
+    javaMainClass = 'org.em.main.MainClass'
+}
+
+application {
+    mainClassName = javaMainClass
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter:2.6.3'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket:2.6.3'
+    implementation 'javax.activation:activation:1.1.1'
+    implementation 'com.sun.mail:javax.mail:1.6.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
