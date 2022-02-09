@@ -1,1 +1,1 @@
-web: ./gradlew run --args="--server.port=$PORT $JAVA_OPTS"
+web: ./gradlew run --args="--server.port=$PORT $JAVA_OPTS" --stacktrace
