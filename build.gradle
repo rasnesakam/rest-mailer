@@ -35,4 +35,14 @@ test {
     useJUnitPlatform()
 }
 
+jar{
+    manifest.attributes["Main-Class"] = "org.em.main.MainClass"
+}
 
+task runProject(type: JavaExec){
+    javaLauncher = javaToolchains.launcherFor{
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = application.mainClass
+}
