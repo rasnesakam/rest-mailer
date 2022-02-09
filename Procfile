@@ -1,1 +1,1 @@
-web: ./gradlew run --args="--server.port=$PORT"
+web: ./gradlew run --args="--server.port=$PORT $JAVA_OPTS"
