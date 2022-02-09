@@ -1,3 +1,4 @@
 .gradle/
 build/
+dir/
 src/main/resources/application.yml
