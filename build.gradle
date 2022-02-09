@@ -12,6 +12,15 @@ repositories {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'hello.HelloWorld'
+        )
+    }
+}
+
 ext {
     javaMainClass = 'org.em.main.MainClass'
 }
