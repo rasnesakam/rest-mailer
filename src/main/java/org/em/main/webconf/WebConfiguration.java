@@ -1,7 +1,8 @@
 package org.em.main.webconf;
 
 import org.em.main.adapters.abstracts.MailAdapter;
-import org.em.main.adapters.concretes.BasicMailAdapter;
+import org.em.main.adapters.concretes.JavaxMailAdapter;
+import org.em.main.services.PropertiesManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,15 +14,11 @@ public class WebConfiguration {
 
     @Bean
     MailAdapter getBasicMailAdapter(){
-        return new BasicMailAdapter(defaultProperties());
+        return new JavaxMailAdapter(getPropertyManager());
     }
+
     @Bean
-    Properties defaultProperties(){
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host","smtp.gmail.com");
-        properties.put("mail.smtp.port","465");
-        properties.put("mail.smtp.ssl.enable","true");
-        properties.put("mail.smtp.auth","true");
-        return properties;
+    PropertiesManager getPropertyManager(){
+        return new PropertiesManager();
     }
 }

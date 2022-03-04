@@ -1,7 +1,6 @@
 package org.em.main.controllers;
 
 import org.em.main.adapters.abstracts.MailAdapter;
-import org.em.main.adapters.concretes.BasicMailAdapter;
 import org.em.main.modals.Mail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(11)
 
 
 
@@ -36,7 +36,7 @@ test {
 }
 
 jar{
-    manifest.attributes["Main-Class"] = "org.em.main.MainClass"
+    manifest.attributes["Main-Class"] = javaMainClass
 }
 
 task runProject(type: JavaExec){
