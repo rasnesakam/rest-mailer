@@ -13,4 +13,9 @@ public class OAuthController {
     public String gmailOAuth(@PathVariable String uname, @PathVariable String passwd){
         return uname.concat(" ").concat(passwd);
     }
+
+    @GetMapping(path = "outlook/{uname}/{passwd}")
+    public String outlookOAuth(@PathVariable String uname, @PathVariable String passwd){
+        return "randomtoken";
+    }
 }
