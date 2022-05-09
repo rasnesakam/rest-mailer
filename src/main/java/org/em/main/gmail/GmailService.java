@@ -27,6 +27,6 @@ public class GmailService {
                 mail.getFrom(), mail.getTo(), mail.getCc(), mail.getSubject(), mail.getMessage()
         );
         Message message = adapter.createMessage(mimeMessage);
-        service.users().messages().send(mail.getFrom(),message);
+        service.users().messages().send(mail.getFrom(),message).execute();
     }
 }
