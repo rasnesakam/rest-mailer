@@ -6,8 +6,13 @@ import org.em.main.shared.Mail;
 import org.junit.jupiter.api.Test;
 
 import javax.mail.MessagingException;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.util.Base64;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UnitTest {
 
@@ -30,5 +35,13 @@ public class UnitTest {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+
+    //@Test
+    public void testBase64(){
+        String initial = "Yeni bir gün doğuyor merhaba";
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        stream.writeBytes(initial.getBytes(StandardCharsets.UTF_8));
+        assertEquals(stream.toString(StandardCharsets.UTF_8),initial);
     }
 }
