@@ -3,6 +3,7 @@ package org.em.main.shared;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.Arrays;
 
 @Component
 public class Mail {
@@ -12,6 +13,7 @@ public class Mail {
     private String[] cc;
     private String message;
     private String subject;
+    private String charset;
     private File media;
 
     public Mail(){}
@@ -60,7 +62,29 @@ public class Mail {
         return media;
     }
 
+    public String getCharset() {
+        return this.charset;
+    }
+
+    public void setCharset(String charset){
+        this.charset = charset;
+    }
+
     public void setMedia(File media) {
         this.media = media;
     }
+
+
+    @Override
+    public String toString() {
+        return "Mail{" +
+                "from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", cc=" + Arrays.toString(cc) +
+                ", message='" + message + '\'' +
+                ", subject='" + subject + '\'' +
+                ", media=" + media +
+                '}';
+    }
+
 }

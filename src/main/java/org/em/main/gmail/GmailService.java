@@ -26,7 +26,7 @@ public class GmailService {
         NetHttpTransport transport = GoogleNetHttpTransport.newTrustedTransport();
         Gmail service = adapter.createService(transport,mail.getFrom());
         MimeMessage mimeMessage = adapter.createEmail(
-                mail.getFrom(), mail.getTo(), mail.getCc(), mail.getSubject(), mail.getMessage()
+                mail.getFrom(), mail.getTo(), mail.getCc(), mail.getSubject(), mail.getMessage(),mail.getCharset()
         );
         Message message = adapter.createMessage(mimeMessage);
         service.users().messages().send(mail.getFrom(),message).execute();

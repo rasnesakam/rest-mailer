@@ -19,16 +19,21 @@ import com.google.api.services.gmail.model.Message;
 import org.apache.tomcat.util.buf.Utf8Encoder;
 import org.springframework.stereotype.Component;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class GmailAdapter {
@@ -61,20 +66,38 @@ public class GmailAdapter {
         Credential credential = new AuthorizationCodeInstalledApp(flow,receiver).authorize(user);
         return credential;
     }
-    public MimeMessage createEmail(String from, String to, String[] cc, String subject, String body)
+    public MimeMessage createEmail(
+            String from, String to, String[] cc, String subject, String body, String charset, File file
+    )
         throws MessagingException {
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props,null);
         MimeMessage email = new MimeMessage(session);
         email.setFrom(new InternetAddress(from));
         email.setRecipient(javax.mail.Message.RecipientType.TO,new InternetAddress(to));
-        InternetAddress[] addresses = new InternetAddress[cc.length];
-        for (int i = 0; i < addresses.length; i++)
-            addresses[i] = new InternetAddress(cc[i]);
-        email.setRecipients(javax.mail.Message.RecipientType.CC,addresses);
-        email.setSubject(subject,"utf-8");
-        email.setText(body,"utf-8");
+        if (cc != null){
+            InternetAddress[] addresses = new InternetAddress[cc.length];
+            for (int i = 0; i < addresses.length; i++)
+                if (cc[i].length() > 0)
+                    addresses[i] = new InternetAddress(cc[i]);
+            addresses = Stream.of(addresses).filter(Objects::nonNull).toArray(InternetAddress[]::new);
+            email.setRecipients(javax.mail.Message.RecipientType.CC,addresses);
+        }
+        email.setSubject(subject, charset);
 
+        Multipart multipart = new MimeMultipart();
+
+        MimeBodyPart mimeBody = new MimeBodyPart();
+        mimeBody.setContent(body, String.format("text/html; charset=%s",charset));
+        multipart.addBodyPart(mimeBody);
+
+        mimeBody = new MimeBodyPart();
+        DataSource dataSource = new FileDataSource(file);
+        mimeBody.setDataHandler(new DataHandler(dataSource));
+        mimeBody.setFileName(file.getName());
+        multipart.addBodyPart(mimeBody);
+
+        email.setContent(multipart);
         return email;
     }
 

@@ -14,4 +14,12 @@ import java.util.LinkedHashMap;
 @ConfigurationProperties
 public class JsonProps {
     private LinkedHashMap<String, ?> web;
+
+    public LinkedHashMap<String, ?> getWeb() {
+        return web;
+    }
+
+    public void setWeb(LinkedHashMap<String, ?> web) {
+        this.web = web;
+    }
 }

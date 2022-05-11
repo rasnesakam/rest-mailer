@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = { JsonProps.class})
+@ComponentScan(basePackageClasses = { MainClass.class,JsonProps.class})
 public class MainClass {
     public static void main(String[] args) {
         SpringApplication.run(MainClass.class,args);
